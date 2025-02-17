@@ -20,7 +20,7 @@ var numero = 45;
     numero = 89;
     console.log(numero);
 
-let nombre = "Chris";
+var nombre = "Chris";
     console.log(nombre);
     nombre = "Juan";
     console.log(nombre);
