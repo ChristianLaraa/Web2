@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Generar un codigo Qr con una API</h1>
+    </header>
+<div>
+    <label for="input1">Nombre: </label>
+        <input type="text" id="input1" require maxlength="150" placeholder="Ingresa tu nombre">
+    <br><br>
+    <label for="input2"> Correo: </label>
+        <input type="email" id="input2" require maxlength="150" placeholder="Ingresa tu correo">
+    <br><br>
+    <label for="input3"> Seleccion de institucion: </label>
+        <input type="text" id="input3" required list="listaescuelas">
+        <datalist id="listaescuelas">
+            <option value="IPN">Politectino Nacional</option>
+            <option value="FESA">Facultad de Estudios Superiores Aragon</option>
+            <option value="UAM">UAM</option>
+            <option value="Ciudad Universitaria">CU</option>
+            </datalist>
+    <br><br>
+    <label for="input4">Dependencia: </label>
+            <input type="text" id="input4" maxlength="50" required placeholder="Ingresa tu dependencia">
+    <br><br>
+    <div>
+        <button onclick="generarQR()"> Generar QR </button>
+        <button onclick="location.href='index.html'">Generar nuevo codigo QR</button>
+    </div>
+<br><br>
+    <div style="text-align: center;" id="qr-code">
+
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
