@@ -1,0 +1,39 @@
+body {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.calculadora {
+    width: 300px;
+    margin: 60px auto;
+    padding: 2rem;
+    border: 2px solid white;
+    border-radius: 12px;
+    background-color: rgb(0, 4, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[type="button"] {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    margin-top: 1.3rem;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover {
+    background-color: rgba(222, 49, 19, 0.654);
+    color: white;
+    transition: .9s;
+}
+
+.chris {
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    margin-top: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
