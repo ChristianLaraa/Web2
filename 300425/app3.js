@@ -6,12 +6,12 @@ const express = require('express');
 const app = express();
 
 //definicion de puerto
-const port = 1904;
+const port = 8990;
 
 //peticiones vs metodos
 //ESTA ES UNA PETICION GET
 app.get('/', (req, res) => {
-    res.send('Hola Mundo desde puerto 1904');    
+    res.send('Hola Mundo desde puerto 8990');    
 });
 
 app.listen(port);
