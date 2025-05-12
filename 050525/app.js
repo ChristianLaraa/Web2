@@ -9,7 +9,6 @@ const port = 3059;
 
 app.get("/",(req,res)=>{
     //res.send("Hola mundo");
-    //res.sendFile("c:/Users/aaron/Escritorio/clases2025/web208/05052025/index.html");
 
     res.sendFile( path.join(__dirname+"/index.html"));
 
