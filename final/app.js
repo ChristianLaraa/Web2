@@ -1,21 +1,21 @@
-const  express = require('express');
+const express = require('express');
+
 const mysql = require('mysql2');
+
 const bodyParser = require('body-parser');
 
-const app = express ();
+const app = express();
 
-//Datos enviados por medio de html van por medio de la url y se genera un request
-//Se utiliza el bodyparser atraves de express
+//Manejo de peticiones HTTP por medio de req
 
-//manejo de peticiones de http por medio de req
-app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//configuración de plantillas
+//Configuracion de plantillas
+
 app.set('view engine', 'ejs');
 
+//Conexion a la base de datos
 
-
-//conexion a la BD
 const db = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root', 
@@ -24,61 +24,106 @@ const db = mysql.createConnection({
     port: 3306
 });
 
-//validacion
+//validar la conexion a la base de datos
 
-db.connect((err) => {
+db.connect(err => {
     if(err){
-        console.log('Error de conexion a la base de datos', err);
-    
+        console.log('Error de conexion a la base de datos');
     }else{
-        console.log('Conectado a la base de datos de manera correcta :)');
+        console.log('Conectado a la base de datos');
     }
 });
 
-//inicio de server
+//Inicio de server
 
-const port = 3008;
-app.listen(port, () => {
-    console.log(`Servidor corriendo en http://127.0.0.1:${port}`);
+const PORT = 3006;
+
+app.listen(PORT, () => {
+    console.log(`Server funcionando en el puerto http://127.0.0.1:${PORT}`);
 });
 
-//mostrar lista de usuarios
+//Mostrar lista de los usuarios
+
 app.get('/', (req, res) => {
+
     //consulta a la base de datos
+
     const consultaDB = 'SELECT * FROM users';
 
-    //trabajamos con la conexion 
-    db.query(consultaDB, (err, results)=>{
+    //Trabajamos con la base de datos
+
+    db.query(consultaDB, (err, results) => {
         if(err){
-            //no se encontro al usuario o se tiene un error
-            console.log('Error al recuperar usuarios', err);
-            //mostraremos informacion al usuario
-            resizeTo.send('Error, no se recuperan los datos de la DB');
-        }else {
+            
+            // no se pudo recuperar la informacion de la base de datos
 
-            res.render('index', { users: results });
+            console.error('Error al recuperar el usuario', err);
+            
+            //Mostraremos informacion al usuario
+
+            res.send('Error, no se pudo recuperar la informacion de la base de datos');
+
+    }else{
+
+        //Mostraremos la informacion al usuario
+
+        res.render('index', { users: results });
+    }
+});
+
+});
+
+//Modulo para agregar un nuevo usuario
+
+app.post('/add', (req, res) => {
+
+    const { name, email } = req.body;
+
+
+
+const insertarRegistro = 'INSERT INTO users (name, email) VALUES (?, ?)';
+
+db.query(insertarRegistro, [name, email], (err, results) => {
+    if (err) {
+        console.error('Error al insertar el registro', err);
+        res.send('Error, no se pudo insertar el registro');
+         } else {
+                console.log('Registro insertado correctamente');
+                res.redirect('/');
+            }
+        });
+});
+
+app.post('/edit/:id', (req, res) => {
+
+});
+
+//Editar usuario
+
+app.get('/edit/:id',(req,res)=>{
+    const {id} =req.params;
+    const buscarUsuarioID = 'SELECT *  FROM users WHERE id = ?';
+    db.query(buscarUsuarioID,[id],(err,results)=>{
+        if(err){
+            console.error("Error",err);
+        }else{
+            res.render('edit',{user: results[0]});
         }
-
     });
 });
 
-//Modulo para agregar un usuario
-app.post('/add', (req, res) => {
-    const {name, email}=req.body;
-    /*
-        nombre: chris
-        correo: christianlara225@aragon.unam.mx
-    */
-    const insertarRegistro = 'INSERT INTO users (name, email) VALUES (?, ?)';
-    
-    db.query(insertarRegistro, [name, email], (err) => {
-        if(err){
-            console.log('Error al agregar usuario: ', err);
-            res.send('Error al agregar usuario');
-        } else {
-            res.redirect('/');
-            
-        }
-    });
+//update usuario 
 
+app.post('/update/:id',(req,res)=>{
+    const {id} = req.params;
+    const {name, email}= req.body;
+
+const query = 'UPDATE users SET name = ?, email = ? WHERE id = ?';
+db.query(query,[name,email,id],(err)=>{
+    if(err){
+        console.error('error', err);
+    }else{
+        res.redirect('/');
+    }
+    })
 });

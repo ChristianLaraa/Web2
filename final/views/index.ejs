@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+    </tr>
+    <% users.forEach(user => { %>
+        <tr>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td>
+                <a href="/edit/<%= user.id%>">Editar</a>
+                <a href="/delete/<%= user.id%>">Eliminar</a>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+<br><br>
+<h1>Registrate aqui!</h1>
+<form action="/add" method="post">
+    <label for="name">Nombre: </label>
+    <input type="text" name="name" id="name" maxlength="45" required placeholder="Ingresa nombre">
+    <br><br>
+    <label for="email">Correo: </label>
+    <input type="text" name="email" id="email" maxlength="45" required placeholder="Ingresa correo">
+    <br><br>
+    <button type="submit">Registro</button>
+</form>
+</body>
+</html>
