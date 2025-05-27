@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <h2>Editar Datos</h2>
-    <form action="/update/<%= user.id%>" method="post">
+    <form action="/update/<%= users.id%>" method="post">
         <label for="name">Nombre</label>
-             <input type="text" name="name" id="name" >
+             <input type="text" name="name" id="name" value="<%= users.name %>">
              <br><br>
         <label for="email">Correo</label>
-            <input type="text" name="email" id="email">
+            <input type="text" name="email" id="email" value="<%= users.email %>">
             <br><br>
         <button type="submit">Actualizar</button>
     </form>

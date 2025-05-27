@@ -1,49 +1,42 @@
-const express = require('express');
-
+const express = require("express");
 const mysql = require('mysql2');
-
 const bodyParser = require('body-parser');
-
 const app = express();
+const path = require('path');
+//Configuración de la carpeta de vistas 
+app.use(express.static(path.join(__dirname, 'public')));
 
-//Manejo de peticiones HTTP por medio de req
+//Manejo de peticiones http por medio de req
+app.use(bodyParser.urlencoded({extends:false}));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
-//Configuracion de plantillas
-
+//Configuración de Plantillas
 app.set('view engine', 'ejs');
 
-//Conexion a la base de datos
-
+//conexion a la DB
 const db = mysql.createConnection({
     host: '127.0.0.1',
-    user: 'root', 
-    password: 'Lunapug09.',  //password de la base de datos
+    user: 'root',
+    password: 'Lunapug09.',
     database: 'node_crud',
     port: 3306
 });
 
-//validar la conexion a la base de datos
-
-db.connect(err => {
-    if(err){
-        console.log('Error de conexion a la base de datos');
+//Validación 
+db.connect((err) => {
+    if (err) {
+        console.error('Error de conexion en la DB');
     }else{
-        console.log('Conectado a la base de datos');
+        console.log('Conexión realizada con exito a la DB ');
     }
 });
 
-//Inicio de server
-
-const PORT = 3006;
-
-app.listen(PORT, () => {
-    console.log(`Server funcionando en el puerto http://127.0.0.1:${PORT}`);
+//inicio del servidor
+const port = 5008;
+app.listen(port, () => {
+    console.log(`127.0.0.1:${port}`);
 });
 
-//Mostrar lista de los usuarios
-
+//mostrar lista de usuarios
 app.get('/', (req, res) => {
 
     //consulta a la base de datos
@@ -73,14 +66,11 @@ app.get('/', (req, res) => {
 
 });
 
+
 //Modulo para agregar un nuevo usuario
 
 app.post('/add', (req, res) => {
-
-    const { name, email } = req.body;
-
-
-
+const { name, email } = req.body;
 const insertarRegistro = 'INSERT INTO users (name, email) VALUES (?, ?)';
 
 db.query(insertarRegistro, [name, email], (err, results) => {
@@ -91,52 +81,54 @@ db.query(insertarRegistro, [name, email], (err, results) => {
                 console.log('Registro insertado correctamente');
                 res.redirect('/');
             }
-        });
+    });
 });
 
-app.post('/edit/:id', (req, res) => {
+//Modulo editar un usuario
+app.post('/add', (req, res) => {
 
 });
 
-//Editar usuario
-
-app.get('/edit/:id',(req,res)=>{
-    const {id} =req.params;
-    const buscarUsuarioID = 'SELECT *  FROM users WHERE id = ?';
-    db.query(buscarUsuarioID,[id],(err,results)=>{
-        if(err){
-            console.error("Error",err);
-        }else{
-            res.render('edit',{user: results[0]});
+//editar un usuario
+app.get('/edit/:id', (req, res) => {
+    const{id}=req.params;
+    const buscarUsuariID = 'SELECT * FROM users WHERE id = ?';
+    db.query(buscarUsuariID, [id], (err, results) => {
+        if (err) {
+            console.error('Error al buscar el usuario', err);
+            res.send('Error, no se pudo recuperar la informacion de la base de datos');
+        } else {
+            res.render('edit', { users: results[0] });
         }
     });
 });
 
-//update usuario 
-
-app.post('/update/:id',(req,res)=>{
+//update
+app.post('/update/:id', (req, res) => {
     const {id} = req.params;
-    const {name, email}= req.body;
+    const {name,email} = req.body;
 
-const query = 'UPDATE users SET name = ?, email = ? WHERE id = ?';
-db.query(query,[name,email,id],(err)=>{
-    if(err){
-        console.error('error', err);
-    }else{
-        res.redirect('/');
-    }
-    })
+    const query = "UPDATE users SET name =?, email =? WHERE id =?";
+    db.query(query,[name,email,id], (err)=>{
+        if(err){
+            console.error('error',err);
+        }else{
+            res.redirect('/');
+        }
+    });
 });
 
-//eliminar usuario 
+//Eliminar un usuario
 app.get('/delete/:id', (req, res)=>{
-    const {id} = req.params;
+    const {id}=req.params;
     const eliminarUsuarioId = 'DELETE FROM users WHERE id = ?';
-    db.query(eliminarUsuarioId), [id], (err)=>{
+    db.query(eliminarUsuarioId, [id], (err)=>{
         if(err){
             console.error('Error al eliminar en la DB', err);
             res.send("Error en la DB")
         }else{
+            console.log('Usuario eliminado correctamente de la DB');
             res.redirect('/');
-        }};
+        }
+    });
 });

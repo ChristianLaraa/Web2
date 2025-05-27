@@ -1,0 +1,105 @@
+/* Fuente más moderna y legible */
+body {
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Estilo para tablas */
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eef3fc;
+}
+
+.col-id {
+    width: 10%;
+}
+
+.col-cam {
+    width: 35%;
+}
+
+/* Botones tipo enlace */
+a {
+    margin: 7px;
+    text-decoration: none;
+    color: #ffffff;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #2563eb;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+a:hover {
+    background: #1e40af;
+}
+
+.a2 {
+    background: #dc2626;
+}
+
+.a2:hover {
+    background: #991b1b;
+}
+
+/* Campos de texto */
+input[type="text"] {
+    width: 60%;
+    padding: 12px 20px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Botón de envío */
+button[type="submit"] {
+    background-color: #16a34a;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #15803d;
+}

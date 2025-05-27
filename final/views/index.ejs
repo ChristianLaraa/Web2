@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CRUD en node | Christian Lara</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="body">
     
 <table>
-    <tr>
-        <th>Id</th>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Acciones</th>
+    <h1>Lista de Usuarios.</h1>
+    <tr >
+        <th class="col-id">ID</th>
+        <th class="col-cam">Nombre</th>
+        <th class="col-cam">Correo</th>
+        <th >Acciones</th>
+       
     </tr>
     <% users.forEach(user => { %>
         <tr>
-            <td><%= user.id %></td>
-            <td><%= user.name %></td>
-            <td><%= user.email %></td>
+            <td class="col-id"><%= user.id %></td>
+            <td class="col-cam"><%= user.name %></td>
+            <td class="col-cam"><%= user.email %></td>
             <td>
-                <a href="/edit/<%= user.id%>">Editar</a>
-                <a href="/delete/<%= user.id%>">Eliminar</a>
+                <a href="/edit/<%=user.id %>">Editar</a>
+                <a class="a2" href="/delete/<%=user.id %>">Eliminar</a>
             </td>
         </tr>
     <% }) %>
 </table>
+
 <br><br>
-<h1>Registrate aqui!</h1>
+
+<!-- Formulario Agregar Usuario -->
+<h2>Agregar Usuario</h2>
 <form action="/add" method="post">
     <label for="name">Nombre: </label>
     <input type="text" name="name" id="name" maxlength="45" required placeholder="Ingresa nombre">
